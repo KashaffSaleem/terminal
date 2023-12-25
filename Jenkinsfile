@@ -5,8 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build the Docker image
-                    dockerImage = docker.build("kashafsaleem/flask-web-app")
+                    // Your build steps here
+                    echo 'Building the Docker image...'
+                    dockerImage = docker.build("your-docker-hub-username/your-image-name")
                 }
             }
         }
@@ -15,14 +16,15 @@ pipeline {
             steps {
                 // Run test cases (integrate with your testing framework)
                 // Example: sh 'pytest tests/'
+                echo 'Running tests...'
             }
         }
 
         stage('Deploy') {
             steps {
                 script {
-                    // Deploy the Docker image to your environment
-                    // Example: sh 'docker run kashafsaleem/flask-web-app'
+                    // Your deployment steps here
+                    echo 'Deploying the Docker image...'
                 }
             }
         }
@@ -31,7 +33,8 @@ pipeline {
     post {
         success {
             script {
-                docker.withRegistry('https://registry.hub.docker.com', 'kashaf-dockerhub') {
+                // Push the Docker image on success
+                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                     dockerImage.push()
                 }
             }
@@ -39,7 +42,9 @@ pipeline {
 
         failure {
             // Rollback logic (e.g., redeploy previous version)
+            echo 'Deployment Failed. Rolling back...'
             mail to: 'fa20-bse-048@cuiatk.edu.pk', subject: 'Deployment Failed', body: 'Please investigate the failed deployment.'
         }
     }
 }
+s
