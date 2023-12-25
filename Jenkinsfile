@@ -20,10 +20,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                script {
+                script 
                     // Deploy the Docker image to your environment
                     // Example: sh 'docker run kashafsaleem/flask-web-app'
-                }
+                
             }
         }
     }
