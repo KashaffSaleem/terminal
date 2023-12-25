@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    dockerImage = docker.build("your-docker-hub-username/your-image-name")
+                    dockerImage = docker.build("kashafsaleem/flask-web-app")
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline {
     post {
         success {
             script {
-                docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                docker.withRegistry('https://hub.docker.com/r/kashafsaleem/flask-web-app', 'kashaf-dockerhub') {
                     dockerImage.push()
                 }
             }
